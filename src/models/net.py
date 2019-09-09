@@ -1,8 +1,5 @@
 from keras.engine.input_layer import Input
-from keras.layers import Conv2D
-from keras.layers import Dense
-from keras.layers import Flatten
-from keras.layers import MaxPooling2D
+from keras.layers import Conv2D, Dense, Flatten, MaxPooling2D
 from keras.models import Model
 import numpy as np
 
