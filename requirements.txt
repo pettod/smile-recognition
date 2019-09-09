@@ -1,0 +1,3 @@
+opencv-python>=4.1.1
+tensorflow-gpu>=1.14
+keras>=2.2.5
