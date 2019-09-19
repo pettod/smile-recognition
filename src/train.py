@@ -15,9 +15,10 @@ def main():
     X_train, X_test, y_train, y_test = [np.array(arr, dtype=np.float32) for arr in [X_train, X_test, y_train, y_test]]
     model = network_structure(X_train, y_train)
     # model = keras.applications.MobileNetV2(classes=2, weights=None)
-    model.compile(optimizer='adam', loss='MAE', metrics=['acc'])
+    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['acc'])
     model.fit(X_train, y_train, epochs=3, batch_size=16)
     preds = model.predict(X_test)
+    preds = [0 if score < 0.5 else 1 for score in preds]
     print(accuracy_score(preds, y_test))
 
 
