@@ -17,7 +17,8 @@ def network_structure(x, y, conv_kernel_size=(3, 3),
     for maxpool in [True, False] * 3:
         conv = BatchNormalization()(Conv2D(
             32, conv_kernel_size, padding='same', activation='relu',
-            kernel_initializer=keras.initializers.glorot_normal(1))(pool))
+            kernel_initializer=keras.initializers.glorot_normal(1),
+            kernel_regularizer='l2')(pool))
         if maxpool:
             pool = MaxPooling2D(padding='same')(conv)
         else:

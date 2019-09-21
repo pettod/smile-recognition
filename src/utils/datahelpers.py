@@ -22,7 +22,7 @@ def load_imgs(root: str):
 def split_data(imgs: list, labels: list):
     assert len(imgs) == len(labels)
     X_train, X_test, y_train, y_test = train_test_split(
-        imgs, labels, test_size=0.2, random_state=42
+        imgs, labels, test_size=0.2, random_state=42, stratify=labels
         )
     return X_train, X_test, y_train, y_test
 

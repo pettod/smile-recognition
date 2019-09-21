@@ -1,9 +1,10 @@
 import os
 
 import numpy as np
+import matplotlib.pyplot as plt
 from keras.models import model_from_json
+from keras.optimizers import Adam
 from sklearn.metrics import accuracy_score
-import cv2 as cv
 
 from src.utils.datahelpers import split_data, load_labels, load_imgs
 from src.models.net import network_structure
@@ -28,21 +29,38 @@ def load(model_fn, weights_fn):
 
 def main():
     root = 'data/genki4k/'
-    model_fn = 'data/models/net.json'
-    weights_fn = 'data/models/weights.h5'
+    model_fn = 'data/models/net_l2.json'
+    weights_fn = 'data/models/weights_l2.h5'
     imgs = load_imgs(root)
     labels = load_labels(root)
-    X_train, X_test, y_train, y_test = split_data(imgs, labels)
-    X_train, X_test, y_train, y_test = [np.array(arr, dtype=np.float32) for arr in [X_train, X_test, y_train, y_test]]
+    x_train, x_test, y_train, y_test = split_data(imgs, labels)
+    x_train, x_test, y_train, y_test = [
+        np.array(arr, dtype=np.float32) for arr in [
+            x_train, x_test, y_train, y_test]]
     if os.path.exists(model_fn) and os.path.exists(weights_fn):
         model = load(model_fn, weights_fn)
     else:
-        model = network_structure(X_train, y_train)
+        model = network_structure(x_train, y_train)
+        epochs = 50
         # model = keras.applications.MobileNetV2(classes=2, weights=None)
-        model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['acc'])
-        model.fit(X_train, y_train, epochs=50, batch_size=32, validation_data=(X_test, y_test))
-        save(model_fn, weights_fn, model)
-    preds = model.predict(X_test)
+        model.compile(
+            optimizer=Adam(), loss='binary_crossentropy', metrics=['acc'])
+        history = model.fit(
+            x_train, y_train, epochs=epochs, batch_size=32,
+            validation_data=(x_test, y_test))
+        hist = history.history
+        print(hist)
+        x_plot = list(range(1, epochs + 1))
+        plt.xlabel('Epoch')
+        plt.ylabel('Accuracy')
+        plt.plot(x_plot, hist['acc'], label='acc')
+        plt.plot(x_plot, hist['val_acc'], label='val_acc')
+        plt.xticks(x_plot)
+        plt.ylim(0, 1)
+        plt.legend()
+        plt.show()
+        # save(model_fn, weights_fn, model)
+    preds = model.predict(x_test)
     preds = [0 if score < 0.5 else 1 for score in preds]
     print(accuracy_score(preds, y_test))
 
