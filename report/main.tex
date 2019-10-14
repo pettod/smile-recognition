@@ -1,0 +1,98 @@
+% Template for SGN-3507 papers; to be used with:
+%          spconf.sty   - ICASSP/ICIP LaTeX style file
+%          IEEEtran.bst - IEEE bibliography style file
+
+% Originally created for MCSP 20xx papers;
+% Created:  Sep 2006 - Riku Uusikartano -- riku.uusikartano@tut.fi
+% Modified: Sep 2007 - Riku Uusikartano -- riku.uusikartano@tut.fi
+% Modified: Oct 2009 - Riku Uusikartano -- riku.uusikartano@tut.fi
+% Modified: Oct 2010 - Jukka Suhonen -- jukka.suhonen@tut.fi
+% Modified: Oct 2011 - Francescantonio Della Rosa -- francescantonio.dellarosa@tut.fi
+% Modified: Nov 2011 - Jukka Suhonen -- jukka.suhonen@tut.fi
+% Modified for SGN-3507 March 2013 - Juha Pajula -- juha.pajula(a)tut.fi
+% Modified for SGN-16006 Jan 2014 - Hanna Silen -- hanna.silen(a)tut.fi
+
+% --------------------------------------------------------------------------
+\documentclass{article}
+
+% The amsmath and epsfig packages greatly simplify the process of adding
+% equations and figures to the document, and thus their use is highly
+% recommended.
+% ------------
+\usepackage{spconf,amsmath,epsfig}
+\usepackage{subcaption}
+
+% Title.
+% ------
+\title{Smile Recognition}
+
+\name{Jesper Granat, Peter Todorov
+%\thanks{Insert sponsor acknowledgments (where necessary) here.}
+}
+%
+\address{jesper.granat@tuni.fi, peter.todorov@tuni.fi}
+
+% Hyphenation (hyphenate all names and non-english words here).
+% -------------------------------------------------------------
+\hyphenation{Tam-pe-re micro-soft}
+
+\begin{document}
+
+\maketitle
+\sloppy
+
+% Abstract.
+% ---------
+\begin{abstract}
+In this study, a convolutional neural network was trained to recognize
+smile from an image. The training and deployment was done using the
+Keras framework on top of the Tensorflow framework. The training data
+was 4 000 images of smiling and non-smiling faces. The accuracy on
+this dataset was 86,XXX \%.
+\end{abstract}
+
+% First section, often named as Introduction.
+% -------------------------------------------
+\section{Introduction}
+\label{sec:intro}
+Since their introduction [REFERENCE], Convolutional Neural Networks
+(CNNs) have been widely used in solving various image processing
+problems, such as classification, object recognition and image
+enhancement [REFERENCE]. In this study, a custom design CNN is trained
+for real-time smile recognition. Real-time in this context refers to
+inference speed where the network can be run on live video feed in
+over 20 fps on a laptop with GPU\@.
+
+% Optional section.
+% ---------------
+\section{Background}
+\label{sec:background}
+% Third section
+\section{Experiments}
+
+% Forth section
+\section{Results}
+\label{sec:results}
+
+% Fourth section
+\section{Conclusion}
+\label{sec:conclusion}
+
+\small
+
+% IEEEtran is a LaTeX style file defining the reference formatting.
+% -----------------------------------------------------------------
+\bibliographystyle{IEEEtran}
+
+% IEEEabrv is a LaTeX style file defining the abbreviations of different
+% journals and conferences. mcsp_refs contains the actual reference data
+% from which the references are selected into the paper using \cite{}.
+% ----------------------------------------------------------------------
+
+% Comment of following line if bibliography is not needed
+%\bibliography{mcsp_refs}
+
+% ---------------------------------------------------------------------------
+\vfill\pagebreak
+
+\end{document}

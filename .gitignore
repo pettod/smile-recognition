@@ -108,3 +108,13 @@ venv.bak/
 
 # Project specific files
 data
+
+# LaTeX files
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.gz
+*.bak
+
