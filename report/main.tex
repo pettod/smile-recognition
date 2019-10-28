@@ -8,7 +8,7 @@
 % Modified: Oct 2009 - Riku Uusikartano -- riku.uusikartano@tut.fi
 % Modified: Oct 2010 - Jukka Suhonen -- jukka.suhonen@tut.fi
 % Modified: Oct 2011 - Francescantonio Della Rosa -- francescantonio.dellarosa@tut.fi
-% Modified: Nov 2011 - Jukka Suhonen -- jukka.suhonen@tut.fi
+% Modified: Nov 2011 - Jukka Suhonen -- juka.suhonen@tut.fi
 % Modified for SGN-3507 March 2013 - Juha Pajula -- juha.pajula(a)tut.fi
 % Modified for SGN-16006 Jan 2014 - Hanna Silen -- hanna.silen(a)tut.fi
 
@@ -103,6 +103,36 @@ Furthermore, classification with CNNs includes many more bells and
 whistles that create the absolute best results.
 
 \section{Solution}
+% 1. & 2.
+The CNN model used in this study will be trained on GENKI-4K Face
+dataset [REFERENCE]. In addition to the smile status, the training
+data contains also the face orientation, but that will be ignored in
+this study. It could be utilized to orient the faces upright as a
+preprocessing step, but that is out of scope of this study. Therefore,
+the problem to be solved in this study is formulated as a binary
+classification problem. The data is split randomly into 80 \% training
+data and 20 \% test data in a stratified manner. This means that both
+splits contain equal proportions of positive and negative examples.
+
+% 3.
+The CNN archtecture used in this study is similar to the one proposed
+in the laboratory instructions [REFERENCE], and it is implemented with
+the Keras [REFERENCE] framework. In addition to the layers proposed by
+the instructor, a batch normalization layer is added in front of every
+convolutional layer. A $3 \times 3$ convolutional kernel is used in
+every convolutional layer. Normally distributed glorot initializer
+[REFERENCE] is used to initialize the kernel weights, and each layer
+contains $L2$-regularization. The activation function for the fully
+connected layer is Sigmoid activation [REFERENCE]. The model is
+trained for 50 epochs using Adam [REFERENCE] optimizer and batch size
+of 32. Otherwise the default Keras parameters are used.
+
+% 4.
+Finally, an additional sanity check and demonstrator is constructed by
+reading a web camera feed in real time. Each frame is sent to the
+model synchronously, and the output of the model is displayed in the
+grafical user interface in a human-readable form. This functionality
+is implemented with the OpenCV computer vision library [REFERENCE].
 
 \section{Results}\label{sec:results}
 
@@ -126,3 +156,4 @@ whistles that create the absolute best results.
 \vfill\pagebreak
 
 \end{document}
+
