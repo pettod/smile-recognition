@@ -1,0 +1,9 @@
+figure1.jpg	- Example figure
+IEEEabrv.bib	- LaTeX style file defining the abbreviations of different journals and conferences
+IEEEtran.bst	- LaTeX style file defining the reference formatting
+INDEX.txt	- This file
+mcsp12.bbl	- Generated bibliography for the papers
+SGN16006_template.pdf	- Generated PDF preview of the template
+SGN16006_template.tex	- LaTeX template paper with the formatting instructions
+mcsp_refs.bib	- Example bibliography file
+spconf.sty	- LaTeX style file for MCSP 2010
