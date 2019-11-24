@@ -10,11 +10,11 @@ def thrs(x):
 
 
 def network_structure(x, y, conv_kernel_size=(3, 3),
-                      print_model_structure=True):
+                      print_model_structure=True, num_layers=6):
     input_tensor = Input(x[0].shape)
 
     pool = input_tensor
-    for maxpool in [True, False] * 3:
+    for maxpool in [True, False] * num_layers:
         conv = BatchNormalization()(Conv2D(
             32, conv_kernel_size, padding='same', activation='relu',
             kernel_initializer=keras.initializers.glorot_normal(1),
