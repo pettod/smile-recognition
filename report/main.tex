@@ -102,7 +102,7 @@ batch normalization [REFERENCE] is used to generalaize the results.
 Furthermore, classification with CNNs includes many more bells and
 whistles that create the absolute best results.
 
-\section{Solution}
+\section{Solution}\label{sec:solution}
 % 1. & 2.
 The CNN model used in this study will be trained on GENKI-4K Face
 dataset [REFERENCE]. In addition to the smile status, the training
@@ -135,6 +135,48 @@ grafical user interface in a human-readable form. This functionality
 is implemented with the OpenCV computer vision library [REFERENCE].
 
 \section{Results}\label{sec:results}
+The solution described in Section~\ref{sec:solution} was achieved
+through iterative optimizion. First, the default parameters were used,
+which gave a somewhat reasonable result. Batch normalization was then
+added, because from our previous experience with neural networks we
+knew it would help. It did improve the results a little bit. The
+largest difference in this case, however, was achieved by carefully
+selecting the loss function. Cross-entropy loss was noted to be the
+superior loss for this case. Finally, when $L2$-regularization was
+added, the model beat the desired accuracy.
+
+\begin{table}[]
+\centering
+\caption{The confusion matrix for the optimized default architecture
+  with batch normalization}\label{tab:default-confusion}
+\begin{tabular}{lll}
+\hline
+                                 & Not smiling & Smiling \\ \hline
+\multicolumn{1}{l|}{Not smiling} & 268         & 100     \\
+\multicolumn{1}{l|}{Smiling}     & 65          & 367     \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[]
+\centering
+\caption{The confusion matrix for the optimized 4 layer architecture
+  with batch normalization and regularization (accuracy 0.86875 \%)}\label{tab:sixlayers}
+\begin{tabular}{lll}
+\hline
+                                 & Not smiling & Smiling \\ \hline
+\multicolumn{1}{l|}{Not smiling} & 309         & 59     \\
+\multicolumn{1}{l|}{Smiling}     & 46          & 386     \\ \hline
+\end{tabular}
+\end{table}
+
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth]{figures/default_bn.pdf}\label{fig:default}
+  \caption{Learning curve with optimized hyperparameters and batch
+    normalization with the default architecture}
+\end{figure}
+
 
 \section{Conclusion}\label{sec:conclusion}
 
