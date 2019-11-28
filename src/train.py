@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from keras.models import model_from_json
 from keras.optimizers import Adam
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, confusion_matrix
 
 from src.utils.datahelpers import split_data, load_labels, load_imgs
 from src.models.net import network_structure
@@ -29,8 +29,8 @@ def load(model_fn, weights_fn):
 
 def main():
     root = 'data/genki4k/'
-    model_fn = 'data/models/net_l2.json'
-    weights_fn = 'data/models/weights_l2.h5'
+    model_fn = 'data/models/net_batch_size_bn.json'
+    weights_fn = 'data/models/weights_batch_size_bn.h5'
     imgs = load_imgs(root)
     labels = load_labels(root)
     x_train, x_test, y_train, y_test = split_data(imgs, labels)
@@ -40,29 +40,31 @@ def main():
     if os.path.exists(model_fn) and os.path.exists(weights_fn):
         model = load(model_fn, weights_fn)
     else:
-        model = network_structure(x_train, y_train)
+        model = network_structure(x_train, y_train, num_layers=4,
+                                  regularization='l2')
         epochs = 50
         # model = keras.applications.MobileNetV2(classes=2, weights=None)
         model.compile(
-            optimizer=Adam(), loss='binary_crossentropy', metrics=['acc'])
+            optimizer=Adam(lr=0.001), loss='binary_crossentropy', metrics=['acc'])
         history = model.fit(
-            x_train, y_train, epochs=epochs, batch_size=32,
+            x_train, y_train, epochs=epochs, batch_size=64,
             validation_data=(x_test, y_test))
         hist = history.history
-        print(hist)
         x_plot = list(range(1, epochs + 1))
         plt.xlabel('Epoch')
         plt.ylabel('Accuracy')
-        plt.plot(x_plot, hist['acc'], label='acc')
-        plt.plot(x_plot, hist['val_acc'], label='val_acc')
-        plt.xticks(x_plot)
+        plt.plot(x_plot, hist['acc'], label='Train Accuracy')
+        plt.plot(x_plot, hist['val_acc'], label='Validation Accuracy')
         plt.ylim(0, 1)
         plt.legend()
         plt.show()
-        # save(model_fn, weights_fn, model)
+        save(model_fn, weights_fn, model)
+
+    # Evaluate the model
     preds = model.predict(x_test)
     preds = [0 if score < 0.5 else 1 for score in preds]
-    print(accuracy_score(preds, y_test))
+    print(confusion_matrix(y_test, preds))
+    print(accuracy_score(y_test, preds))
 
 
 if __name__ == '__main__':

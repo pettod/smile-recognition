@@ -1,8 +1,11 @@
+"""net.py
+
+Defines the function that generates the network architecture
+"""
 import keras
 from keras.engine.input_layer import Input
-from keras.layers import Conv2D, Dense, Flatten, MaxPooling2D, BatchNormalization, ReLU
+from keras.layers import Conv2D, Dense, Flatten, MaxPooling2D, BatchNormalization
 from keras.models import Model
-import numpy as np
 
 
 def thrs(x):
@@ -10,15 +13,20 @@ def thrs(x):
 
 
 def network_structure(x, y, conv_kernel_size=(3, 3),
-                      print_model_structure=True):
+                      print_model_structure=True, num_layers=3,
+                      batch_normalization=True, regularization=None):
     input_tensor = Input(x[0].shape)
 
+    # Create the network architecture. Every other layer has a max pooling
+    # layer.
     pool = input_tensor
-    for maxpool in [True, False] * 3:
-        conv = BatchNormalization()(Conv2D(
+    for maxpool in [True, False] * num_layers:
+        conv = Conv2D(
             32, conv_kernel_size, padding='same', activation='relu',
             kernel_initializer=keras.initializers.glorot_normal(1),
-            kernel_regularizer='l2')(pool))
+            kernel_regularizer=regularization)(pool)
+        if batch_normalization:
+            conv = BatchNormalization()(conv)
         if maxpool:
             pool = MaxPooling2D(padding='same')(conv)
         else:
