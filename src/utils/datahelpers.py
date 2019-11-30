@@ -1,3 +1,4 @@
+"""Helper functions for handling data"""
 import os
 import glob
 
@@ -20,6 +21,7 @@ def load_imgs(root: str):
 
 
 def split_data(imgs: list, labels: list):
+    """Make a 80-20 split of the data using stratified randomness"""
     assert len(imgs) == len(labels)
     X_train, X_test, y_train, y_test = train_test_split(
         imgs, labels, test_size=0.2, random_state=42, stratify=labels
@@ -28,5 +30,7 @@ def split_data(imgs: list, labels: list):
 
 
 if __name__ == '__main__':
+    # This is just a test that the data fits the precondition that the number
+    # of images equal the number of labels
     root = 'data/genki4k/'
     print(len(load_labels(root)) == len(load_imgs(root)))

@@ -28,29 +28,48 @@ def load(model_fn, weights_fn):
 
 
 def main():
+    """The main function: trains and evaluates the network.
+
+    There three configuarble options in this function and they are on the first
+    three lines. If a model exists in the defined path, it is loaded and
+    evaluated. If it does not exist, it is first trained and then evaluated.
+    """
     root = 'data/genki4k/'
-    model_fn = 'data/models/net_batch_size_bn.json'
-    weights_fn = 'data/models/weights_batch_size_bn.h5'
+    model_fn = 'data/models/net_best32.json'
+    weights_fn = 'data/models/weights_best32.h5'
+
+    # Load the data
     imgs = load_imgs(root)
     labels = load_labels(root)
+
+    # Split the data
     x_train, x_test, y_train, y_test = split_data(imgs, labels)
     x_train, x_test, y_train, y_test = [
         np.array(arr, dtype=np.float32) for arr in [
             x_train, x_test, y_train, y_test]]
+
+    # If there is a trained model at the desired path, skip training and go
+    # straight to evaluation.
     if os.path.exists(model_fn) and os.path.exists(weights_fn):
         model = load(model_fn, weights_fn)
     else:
-        model = network_structure(x_train, y_train, num_layers=4,
+        # Load the model architecture
+        model = network_structure(x_train, num_layers=4,
                                   regularization='l2')
         epochs = 50
-        # model = keras.applications.MobileNetV2(classes=2, weights=None)
         model.compile(
             optimizer=Adam(lr=0.001), loss='binary_crossentropy', metrics=['acc'])
+
+        # Train the model
         history = model.fit(
-            x_train, y_train, epochs=epochs, batch_size=64,
+            x_train, y_train, epochs=epochs, batch_size=32,
             validation_data=(x_test, y_test))
+
+        # Get some statistics from the training
         hist = history.history
         x_plot = list(range(1, epochs + 1))
+
+        # Plot the statistics
         plt.xlabel('Epoch')
         plt.ylabel('Accuracy')
         plt.plot(x_plot, hist['acc'], label='Train Accuracy')
