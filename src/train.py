@@ -62,7 +62,7 @@ def main():
 
         # Train the model
         history = model.fit(
-            x_train, y_train, epochs=epochs, batch_size=32,
+            x_train, y_train, epochs=epochs, batch_size=64,
             validation_data=(x_test, y_test))
 
         # Get some statistics from the training
