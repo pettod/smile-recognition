@@ -35,8 +35,8 @@ def main():
     evaluated. If it does not exist, it is first trained and then evaluated.
     """
     root = 'data/genki4k/'
-    model_fn = 'data/models/net_best32.json'
-    weights_fn = 'data/models/weights_best32.h5'
+    model_fn = 'data/models/net_best.json'
+    weights_fn = 'data/models/weights_best.h5'
 
     # Load the data
     imgs = load_imgs(root)
