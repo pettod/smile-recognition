@@ -124,8 +124,7 @@ every convolutional layer. Normally distributed glorot initializer
 [REFERENCE] is used to initialize the kernel weights, and each layer
 contains $L2$-regularization. The activation function for the fully
 connected layer is Sigmoid activation [REFERENCE]. The model is
-trained for 50 epochs using Adam [REFERENCE] optimizer and batch size
-of 32. Otherwise the default Keras parameters are used.
+trained using the Adam [REFERENCE] optimizer.
 
 % 4.
 Finally, an additional sanity check and demonstrator is constructed by
@@ -142,43 +141,75 @@ added, because from our previous experience with neural networks we
 knew it would help. It did improve the results a little bit. The
 largest difference in this case, however, was achieved by carefully
 selecting the loss function. Cross-entropy loss was noted to be the
-superior loss for this case. Finally, when $L2$-regularization was
-added, the model beat the desired accuracy.
+superior loss for this case. Finally, when $L2$-regularization and one
+extra layer of a convolution and max pooling was added, the model
+exceeded the desired accuracy of 85 \%. It should be noted that the
+best accuracy of those parameters was 86.00 \% at 44 epochs, which is
+slightly higher than the final accuracy of 85.36 \% at 50 epochs. Even
+though randomness is used in the experiments, the random seeds were
+fixed so that the results are both replicatable and comparable. The
+batch size was 64 in both cases, and learning rate was set to 0.001.
+
+Table~\ref{tab:default-confusion} shows the confusion matrix for the
+optimized default arhcitecture with batch normalization. The learning
+curve for the same process is shown in Figure~\ref{fig:default}.
+Respectively, Table~\ref{tab:best-confusion} and Figure~\ref{fig:best}
+illustrate the same measurements for the final model. As can be seen
+from the confusion matrices, both model are quite good at
+classification, however, the final model is clearly better. The one
+extra layer adds more expression power to the model so that it can
+learn a more complicated representation for the task. On the other
+hand, the $L2$-regularization prevents the model from overfitting.
 
 \begin{table}[]
 \centering
 \caption{The confusion matrix for the optimized default architecture
-  with batch normalization}\label{tab:default-confusion}
+  with batch normalization (accuracy 80.00 \%)}\label{tab:default-confusion}
 \begin{tabular}{lll}
 \hline
                                  & Not smiling & Smiling \\ \hline
-\multicolumn{1}{l|}{Not smiling} & 268         & 100     \\
-\multicolumn{1}{l|}{Smiling}     & 65          & 367     \\ \hline
+\multicolumn{1}{l|}{Not smiling} & 287         & 81      \\
+\multicolumn{1}{l|}{Smiling}     & 79          & 353     \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{table}[]
 \centering
 \caption{The confusion matrix for the optimized 4 layer architecture
-  with batch normalization and regularization (accuracy 0.86875 \%)}\label{tab:sixlayers}
+  with batch normalization and regularization (accuracy 85.36
+  \%)}\label{tab:best-confusion}
 \begin{tabular}{lll}
 \hline
                                  & Not smiling & Smiling \\ \hline
-\multicolumn{1}{l|}{Not smiling} & 309         & 59     \\
-\multicolumn{1}{l|}{Smiling}     & 46          & 386     \\ \hline
+\multicolumn{1}{l|}{Not smiling} & 301         & 67     \\
+\multicolumn{1}{l|}{Smiling}     & 50          & 382     \\ \hline
 \end{tabular}
 \end{table}
 
 
-\begin{figure}
+\begin{figure}[h]
   \centering
   \includegraphics[width=\linewidth]{figures/default_bn.pdf}\label{fig:default}
   \caption{Learning curve with optimized hyperparameters and batch
     normalization with the default architecture}
 \end{figure}
 
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\linewidth]{figures/best.pdf}\label{fig:best}
+  \caption{Learning curve with optimized hyperparameters and batch
+    normalization with one extra layer and $L2$-regularization}
+\end{figure}
+
 
 \section{Conclusion}\label{sec:conclusion}
+A model for smile classification was trained in this work. The final
+model consists of four convolutional, max pooling and batch
+normalization layers that were initialized with Glorot-initialization
+algorithm. It was trained with Adam optimizer with learning rate of
+0.001 (from the original paper), the loss was cross-entropy loss, and
+batch size 64. The convolutional kernel size was set to $3 \times 3$.
+It achieves accuracy of 85.37 \%.
 
 \small
 
