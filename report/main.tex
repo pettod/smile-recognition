@@ -48,7 +48,7 @@ In this study, a convolutional neural network was trained to recognize
 smile from an image. The training and deployment was done using the
 Keras framework on top of the Tensorflow framework. The training data
 was 4 000 images of smiling and non-smiling faces. The accuracy on
-this dataset was 86,XXX \%.
+this dataset was 85.36 \%.
 \end{abstract}
 
 % First section, often named as Introduction.
@@ -133,7 +133,51 @@ model synchronously, and the output of the model is displayed in the
 grafical user interface in a human-readable form. This functionality
 is implemented with the OpenCV computer vision library [REFERENCE].
 
-\section{Results}\label{sec:results}
+\section{Results and Discussion}\label{sec:results}
+
+
+\begin{table}[t]
+\centering
+\caption{The confusion matrix for the optimized default architecture
+  with batch normalization (accuracy 80.00 \%)}\label{tab:default-confusion}
+\begin{tabular}{lll}
+\hline
+                                 & Not smiling & Smiling \\ \hline
+\multicolumn{1}{l|}{Not smiling} & 287         & 81      \\
+\multicolumn{1}{l|}{Smiling}     & 79          & 353     \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{The confusion matrix for the optimized 4 layer architecture
+  with batch normalization and regularization (accuracy 85.36
+  \%)}\label{tab:best-confusion}
+\begin{tabular}{lll}
+\hline
+                                 & Not smiling & Smiling \\ \hline
+\multicolumn{1}{l|}{Not smiling} & 301         & 67     \\
+\multicolumn{1}{l|}{Smiling}     & 50          & 382     \\ \hline
+\end{tabular}
+\end{table}
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\linewidth]{figures/default_bn.pdf}
+  \caption{Learning curve with optimized hyperparameters and batch
+    normalization with the default architecture}\label{fig:default}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\linewidth]{figures/best.pdf}
+  \caption{Learning curve with optimized hyperparameters and batch
+    normalization with one extra layer and
+    $L2$-regularization}\label{fig:best}
+\end{figure}
+
+
 The solution described in Section~\ref{sec:solution} was achieved
 through iterative optimizion. First, the default parameters were used,
 which gave a somewhat reasonable result. Batch normalization was then
@@ -161,44 +205,48 @@ extra layer adds more expression power to the model so that it can
 learn a more complicated representation for the task. On the other
 hand, the $L2$-regularization prevents the model from overfitting.
 
-\begin{table}[]
-\centering
-\caption{The confusion matrix for the optimized default architecture
-  with batch normalization (accuracy 80.00 \%)}\label{tab:default-confusion}
-\begin{tabular}{lll}
-\hline
-                                 & Not smiling & Smiling \\ \hline
-\multicolumn{1}{l|}{Not smiling} & 287         & 81      \\
-\multicolumn{1}{l|}{Smiling}     & 79          & 353     \\ \hline
-\end{tabular}
-\end{table}
+Qualitative analysis shows that the model works somewhat well. Some
+false positives or false negatives on the test data stem from
+difficult examples, for example when the person is smirking in the
+image. This makes it difficult even for humans to classify the images.
+A true negative and a true positive are shown in
+Figure~\ref{fig:tptn}.
 
-\begin{table}[]
-\centering
-\caption{The confusion matrix for the optimized 4 layer architecture
-  with batch normalization and regularization (accuracy 85.36
-  \%)}\label{tab:best-confusion}
-\begin{tabular}{lll}
-\hline
-                                 & Not smiling & Smiling \\ \hline
-\multicolumn{1}{l|}{Not smiling} & 301         & 67     \\
-\multicolumn{1}{l|}{Smiling}     & 50          & 382     \\ \hline
-\end{tabular}
-\end{table}
+The real-time part of the program works quite well as well, provided
+that the person is close enough to the camera. This could be improved
+in the future by adding a face detector, which would draw a bounding
+box around the face, after which the input image could be cropped.
+Also, the lighting plays a part in the working of the real-time
+functionality. Again, a true negative and a true positive are shown in
+Figure~\ref{fig:realtime}. It is important to set the webcam aspect
+ratio to one since all training data was square shaped. It is also
+important to change the input to match the original training input, so
+here $64 \times 64$ is used.
 
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=\linewidth]{figures/default_bn.pdf}\label{fig:default}
-  \caption{Learning curve with optimized hyperparameters and batch
-    normalization with the default architecture}
-\end{figure}
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=\linewidth]{figures/best.pdf}\label{fig:best}
-  \caption{Learning curve with optimized hyperparameters and batch
-    normalization with one extra layer and $L2$-regularization}
+\begin{figure}[t]
+  \begin{minipage}[t]{0.5\textwidth}\centering
+    \begin{subfigure}[t]{0.5\linewidth}\centering
+      \includegraphics[width=0.5\linewidth]{figures/example1.jpg}
+      \caption{True positive}
+    \end{subfigure}%
+    \begin{subfigure}[t]{0.5\linewidth}\centering
+      \includegraphics[width=0.5\linewidth]{figures/example2.jpg}
+      \caption{True negative}
+    \end{subfigure}
+    \caption{Qualitative samples from the test data}\label{fig:tptn}
+  \end{minipage}%
+  \begin{minipage}[t]{0.5\textwidth}\centering
+    \begin{subfigure}[t]{0.5\linewidth}\centering
+      \includegraphics[width=0.5\linewidth]{figures/camera_example1.jpg}
+      \caption{True positive}
+    \end{subfigure}%
+    \begin{subfigure}[t]{0.5\linewidth}\centering
+      \includegraphics[width=0.5\linewidth]{figures/camera_example2.jpg}
+      \caption{True negative}
+    \end{subfigure}
+    \caption{Qualitative samples from the real-time
+      functionality}\label{fig:realtime}
+  \end{minipage}
 \end{figure}
 
 
