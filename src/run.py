@@ -1,4 +1,7 @@
-"""Static run functions"""
+"""run.py
+
+Static run functions
+"""
 import numpy as np
 import cv2 as cv
 
@@ -18,7 +21,10 @@ def load_detection_model():
 
 def main():
     """The main function: run single image through the model"""
-    filename = 'data/genki4k/files/file3110.jpg'
+    # Example images:
+    # 'data/genki4k/files/file3899.jpg': not smiling
+    # 'data/genki4k/files/file0621.jpg': smiling
+    filename = 'data/genki4k/files/file0621.jpg'
 
     # Load the model
     model = load_detection_model()
@@ -32,7 +38,7 @@ def main():
 
     # Decide whether the person is smiling
     smile_status = 'Smiling' if res[0][0] > SMILE_THRS else 'Not smiling'
-    frame = cv.putText(frame, f'Smile status: {smile_status}', (0, 10),
+    frame = cv.putText(frame, f'Result: {smile_status}', (0, 10),
                        cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0))
 
     # Show the results on screen

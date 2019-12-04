@@ -1,3 +1,7 @@
+"""train.py
+
+Contains code for training and evaluating a CNN for smile detection
+"""
 import os
 
 import numpy as np
@@ -11,6 +15,9 @@ from src.models.net import network_structure
 
 
 def save(model_fn, weights_fn, model):
+    """Save the model to a model file describing the architecture and a
+    weights file containing the model weights
+    """
     model_json = model.to_json()
     with open(model_fn, 'w') as f:
         f.write(model_json)
@@ -18,6 +25,9 @@ def save(model_fn, weights_fn, model):
 
 
 def load(model_fn, weights_fn):
+    """Load the model from a model file describing the architecture and a
+    weights file containing the model weights
+    """
     # load json and create model
     with open(model_fn, 'r') as f:
         loaded_model_json = f.read()

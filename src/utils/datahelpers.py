@@ -1,9 +1,13 @@
-"""Helper functions for handling data"""
+"""datahelpers.py
+
+Helper functions for handling data
+"""
 import os
 import glob
 
 import cv2 as cv
 from sklearn.model_selection import train_test_split
+
 
 def load_labels(root: str):
     """Load labeld from the path"""
@@ -31,6 +35,12 @@ def split_data(imgs: list, labels: list):
 
 if __name__ == '__main__':
     # This is just a test that the data fits the precondition that the number
-    # of images equal the number of labels
-    root = 'data/genki4k/'
-    print(len(load_labels(root)) == len(load_imgs(root)))
+    # of images equal the number of labels, and print the names and labels of
+    # the test files
+    data_loc = 'data/genki4k/'
+    ims = [i for i in glob.glob(os.path.join(data_loc, 'files') + '/*jpg')]
+    # ims = load_imgs(data_loc)
+    lbl = load_labels(data_loc)
+    print(len(lbl) == len(ims))
+    _, x_tst, _, y_tst = split_data(ims, lbl)
+    print(x_tst, y_tst)

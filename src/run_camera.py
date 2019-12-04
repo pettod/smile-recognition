@@ -1,4 +1,7 @@
-"""Run camera loop"""
+"""run_camera.py
+
+Run camera loop
+"""
 import numpy as np
 import cv2 as cv
 from src.run import load_detection_model
@@ -32,7 +35,7 @@ def main():
 
         # Use a threshold to decide whether the person is smiling or not
         smile_status = 'Smiling' if res[0][0] > SMILE_THRS else 'Not smiling'
-        frame = cv.putText(frame, f'Smile status: {smile_status}', (50 ,50),
+        frame = cv.putText(frame, f'Smile status: {smile_status}', (50, 50),
                            cv.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0))
 
         # Show the results on screen
