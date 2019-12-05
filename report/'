@@ -54,48 +54,45 @@ this dataset was 85.36 \%.
 % First section, often named as Introduction.
 % -------------------------------------------
 \section{Introduction}\label{sec:intro}
-Since their breakthrough in the 2012 ImageNet
-competition~\cite{krizhevsky_2017}, Convolutional Neural Networks
+Since their introduction [REFERENCE], Convolutional Neural Networks
 (CNNs) have been widely used in solving various image processing
-problems, such as classification~\cite{krizhevsky_2017}, object
-recognition~\cite{yolov3} and image enhancement~\cite{wang_2019}. In
-this study, a custom design CNN is trained for real-time smile
-recognition. Real-time in this context refers to inference speed where
-the network can be run on live video feed in over 20 fps on a laptop
-with GPU\@.
+problems, such as classification, object recognition and image
+enhancement [REFERENCE]. In this study, a custom design CNN is trained
+for real-time smile recognition. Real-time in this context refers to
+inference speed where the network can be run on live video feed in
+over 20 fps on a laptop with GPU\@.
 
 \section{Background}\label{sec:background}
-Convolutional Neural Networks (CNNs) have been shown to be essential
-in modern computer vision applications, such as classification.
-Classification in particular is rather difficult problem due to its
-complexity. Here, the goal is to assign a label from a predefined set
-of labels to an image. Difficulties in this task include truncation of
-objects (object is partially not in the image), occlusion of objects
-(some other object is blocking some parts of the desired object),
-variations in color and lighting, and intra-class variation. The
-complexity of classification can be intuitively explained by
-considering a case where an image of a cat is desired to be
-classified. The problem here is learning a representation of a cat, as
-many cats can look different, an image of the same cat from different
-angle and lighting yields in a completely different matrix of pixel
-values in the image.~\cite{cs231n}
+Convolutional Neural Networks (CNNs) have been shown to be essential in
+modern computer vision applications, such as classification
+[REFERENCE]. Classification in particular is rather difficult problem
+due to its complexity. Here, the goal is to assign a label from a
+predefined set of labels to an image. Difficulties in this task
+include truncation of objects (object is partially not in the image),
+occlusion of objects (some other object is blocking some parts of
+the desired object), variations in color and lighting, and intra-class
+variation. The complexity of classification can be intuitively
+explained by considering a case where an image of a cat is desired to
+be classified. The problem here is learning a representation of a cat,
+as many cats can look different, an image of the same cat from
+different angle and lighting yields in a completely different matrix
+of pixel values in the image. [REFERENCE]
 
 Traditional approaches to image classification have utilized
-hand-crafted algorithms such Histogram of Oriented Gradients
-(HOG)~\cite{hogs}. In such algorithms, pixel color values and pixel
+hand-crafted algorithms such Histogram of Oriented Gradients (HOG)
+[REFERENCE]. In such algorithms, pixel color values and pixel
 proximities are utilized to create a representation of the training
-data. Since 2012~\cite{krizhevsky_2017}, CNNs have been dominant in
-classification. Particularly, deep CNNs from 2015~\cite{he_2015} are
-still dominant in classification or as backbones for more difficult
-tasks, such as image retrieval~\cite{teichman_2018}. These can include
-hundreds or even thousands of layers of convolutions. Typical CNNs for
-classification include two types of layers: convolutional layers and
-pooling layers. Pooling layers introduce non-linearity to the model to
-make is feasible to include several layers of convolutions.
-Convolutional layers, on the other hand, are responsible for creating
-the image representation. The last layer(s) in CNNs are usually fully
-connected layers. The output of the network are the probabilities of
-each class being in the image.~\cite{cs231n}
+data. Since 2012 [REFERENCE], CNNs have been dominant in
+classification. Particularly, deep CNNs from 2015 [REFERENCE] are
+still dominant in classification. These can include hundreds or even
+thousands of layers of convolutions. Typical CNNs for classification
+include two types of layers: convolutional layers and pooling layers.
+Pooling layers introduce non-linearity to the model to make is
+feasible to include several layers of convolutions. Convolutional
+layers, on the other hand, are responsible for creating the image
+representation. The last layer(s) in CNNs are usually fully connected
+layers. The output of the network are the probabilities of each class
+being in the image.
 
 CNNs for classification are trained with cross-entropy loss
 [REFERENCE]. The idea of the loss is to punish weights that are
@@ -127,7 +124,7 @@ every convolutional layer. Normally distributed glorot initializer
 [REFERENCE] is used to initialize the kernel weights, and each layer
 contains $L2$-regularization. The activation function for the fully
 connected layer is Sigmoid activation [REFERENCE]. The model is
-trained using the Adam optimizer~\cite{adam_optimizer}.
+trained using the Adam [REFERENCE] optimizer.
 
 % 4.
 Finally, an additional sanity check and demonstrator is constructed by
@@ -135,6 +132,9 @@ reading a web camera feed in real time. Each frame is sent to the
 model synchronously, and the output of the model is displayed in the
 grafical user interface in a human-readable form. This functionality
 is implemented with the OpenCV computer vision library [REFERENCE].
+
+\section{Results and Discussion}\label{sec:results}
+
 
 \begin{table}[t]
   \begin{minipage}[t]{0.5\textwidth}\centering
@@ -162,21 +162,36 @@ is implemented with the OpenCV computer vision library [REFERENCE].
   \end{minipage}
 \end{table}
 
-\begin{figure}[t]
-    \begin{minipage}[t]{0.5\textwidth}\centering
+\begin{figure*}[t]
+    \begin{minipage}[t]{\linewidth}\centering
       \includegraphics[width=\linewidth]{figures/default_bn.pdf}
       \caption{Learning curve with optimized hyperparameters and batch
         normalization with the default architecture}\label{fig:default}
-    \end{minipage}
-    \begin{minipage}[t]{0.5\textwidth}\centering
+    \end{minipage}%
+    \begin{minipage}[t]{\linewidth}\centering
       \includegraphics[width=\linewidth]{figures/best.pdf}
       \caption{Learning curve with optimized hyperparameters and batch
         normalization with one extra layer and
         $L2$-regularization}\label{fig:best}
-  \end{minipage}
-\end{figure}
+    \caption{Qualitative samples from the test data}\label{fig:tptn}
+  \end{minipage}%
+\end{figure*}
 
-\section{Results and Discussion}\label{sec:results}
+% \begin{figure}[h]
+%   \centering
+%   \includegraphics[width=\linewidth]{figures/default_bn.pdf}
+%   \caption{Learning curve with optimized hyperparameters and batch
+%     normalization with the default architecture}\label{fig:default}
+% \end{figure}
+%
+% \begin{figure}[h]
+%   \centering
+%   \includegraphics[width=\linewidth]{figures/best.pdf}
+%   \caption{Learning curve with optimized hyperparameters and batch
+%     normalization with one extra layer and
+%     $L2$-regularization}\label{fig:best}
+% \end{figure}
+
 
 The solution described in Section~\ref{sec:solution} was achieved
 through iterative optimizion. First, the default parameters were used,
@@ -271,7 +286,7 @@ It achieves accuracy of 85.37 \%.
 % ----------------------------------------------------------------------
 
 % Comment of following line if bibliography is not needed
-\bibliography{mcsp_refs}
+%\bibliography{mcsp_refs}
 
 % ---------------------------------------------------------------------------
 \vfill\pagebreak
