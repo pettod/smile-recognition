@@ -97,18 +97,18 @@ the image representation. The last layer(s) in CNNs are usually fully
 connected layers. The output of the network are the probabilities of
 each class being in the image.~\cite{cs231n}
 
-CNNs for classification are trained with cross-entropy loss
-[REFERENCE]. The idea of the loss is to punish weights that are
-responsible for wrong classification, and reward weights that are
+CNNs for classification are trained with cross-entropy loss~\cite[Ch.
+  6]{goodfellow_2016}. The idea of the loss is to punish weights that
+are responsible for wrong classification, and reward weights that are
 responsible for correct classification during training. Additionally,
-batch normalization [REFERENCE] is used to generalaize the results.
-Furthermore, classification with CNNs includes many more bells and
-whistles that create the absolute best results.
+batch normalization~\cite{ioffe_2015} is used to generalaize the
+results. Furthermore, classification with CNNs includes many more
+bells and whistles that create the absolute best results.
 
 \section{Solution}\label{sec:solution}
 % 1. & 2.
 The CNN model used in this study will be trained on GENKI-4K Face
-dataset [REFERENCE]. In addition to the smile status, the training
+dataset~\cite{GENKI-4K}. In addition to the smile status, the training
 data contains also the face orientation, but that will be ignored in
 this study. It could be utilized to orient the faces upright as a
 preprocessing step, but that is out of scope of this study. Therefore,
@@ -119,22 +119,25 @@ splits contain equal proportions of positive and negative examples.
 
 % 3.
 The CNN archtecture used in this study is similar to the one proposed
-in the laboratory instructions [REFERENCE], and it is implemented with
-the Keras [REFERENCE] framework. In addition to the layers proposed by
+in the laboratory instructions, and it is implemented with the
+Keras~\cite{keras} framework. In addition to the layers proposed by
 the instructor, a batch normalization layer is added in front of every
 convolutional layer. A $3 \times 3$ convolutional kernel is used in
-every convolutional layer. Normally distributed glorot initializer
-[REFERENCE] is used to initialize the kernel weights, and each layer
-contains $L2$-regularization. The activation function for the fully
-connected layer is Sigmoid activation [REFERENCE]. The model is
-trained using the Adam optimizer~\cite{adam_optimizer}.
+every convolutional layer. Normally distributed glorot
+initializer~\cite{glorot10a} is used to initialize the kernel weights,
+and each layer contains $L2$-regularization~\cite[Ch.
+  7]{goodfellow_2016}. The activation function for the fully connected
+layer is Sigmoid activation~\cite[Ch. 6]{goodfellow_2016}. The model
+is trained using the Adam optimizer~\cite{adam_optimizer}.
 
 % 4.
 Finally, an additional sanity check and demonstrator is constructed by
 reading a web camera feed in real time. Each frame is sent to the
 model synchronously, and the output of the model is displayed in the
 grafical user interface in a human-readable form. This functionality
-is implemented with the OpenCV computer vision library [REFERENCE].
+is implemented with the OpenCV computer vision library~\cite{opencv}.
+The project was implemented with the Python~\cite{rossum_1995}
+programming language.
 
 \begin{table}[t]
   \begin{minipage}[t]{0.5\textwidth}\centering
@@ -205,6 +208,32 @@ extra layer adds more expression power to the model so that it can
 learn a more complicated representation for the task. On the other
 hand, the $L2$-regularization prevents the model from overfitting.
 
+\begin{figure*}[t]
+  \begin{minipage}[t]{0.5\textwidth}\centering
+    \begin{subfigure}[t]{0.5\linewidth}\centering
+      \includegraphics[width=0.95\linewidth]{figures/example1.jpg}
+      \caption{True positive}
+    \end{subfigure}%
+    \begin{subfigure}[t]{0.5\linewidth}\centering
+      \includegraphics[width=0.95\linewidth]{figures/example2.jpg}
+      \caption{True negative}
+    \end{subfigure}
+    \caption{Qualitative samples from the test data}\label{fig:tptn}
+  \end{minipage}%
+  \begin{minipage}[t]{0.5\textwidth}\centering
+    \begin{subfigure}[t]{0.5\linewidth}\centering
+      \includegraphics[width=0.95\linewidth]{figures/camera_example1.jpg}
+      \caption{True positive}
+    \end{subfigure}%
+    \begin{subfigure}[t]{0.5\linewidth}\centering
+      \includegraphics[width=0.95\linewidth]{figures/camera_example2.jpg}
+      \caption{True negative}
+    \end{subfigure}
+    \caption{Qualitative samples from the real-time
+      functionality}\label{fig:realtime}
+  \end{minipage}
+\end{figure*}
+
 Qualitative analysis shows that the model works somewhat well. Some
 false positives or false negatives on the test data stem from
 difficult examples, for example when the person is smirking in the
@@ -222,32 +251,6 @@ Figure~\ref{fig:realtime}. It is important to set the webcam aspect
 ratio to one since all training data was square shaped. It is also
 important to change the input to match the original training input, so
 here $64 \times 64$ is used.
-
-\begin{figure}[t]
-  \begin{minipage}[t]{0.5\textwidth}\centering
-    \begin{subfigure}[t]{0.5\linewidth}\centering
-      \includegraphics[width=0.5\linewidth]{figures/example1.jpg}
-      \caption{True positive}
-    \end{subfigure}%
-    \begin{subfigure}[t]{0.5\linewidth}\centering
-      \includegraphics[width=0.5\linewidth]{figures/example2.jpg}
-      \caption{True negative}
-    \end{subfigure}
-    \caption{Qualitative samples from the test data}\label{fig:tptn}
-  \end{minipage}%
-  \begin{minipage}[t]{0.5\textwidth}\centering
-    \begin{subfigure}[t]{0.5\linewidth}\centering
-      \includegraphics[width=0.5\linewidth]{figures/camera_example1.jpg}
-      \caption{True positive}
-    \end{subfigure}%
-    \begin{subfigure}[t]{0.5\linewidth}\centering
-      \includegraphics[width=0.5\linewidth]{figures/camera_example2.jpg}
-      \caption{True negative}
-    \end{subfigure}
-    \caption{Qualitative samples from the real-time
-      functionality}\label{fig:realtime}
-  \end{minipage}
-\end{figure}
 
 
 \section{Conclusion}\label{sec:conclusion}
