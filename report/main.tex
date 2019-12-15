@@ -87,21 +87,21 @@ proximities are utilized to create a representation of the training
 data. Since 2012~\cite{krizhevsky_2017}, CNNs have been dominant in
 classification. Particularly, deep CNNs from 2015~\cite{he_2015} are
 still dominant in classification or as backbones for more difficult
-tasks, such as image retrieval~\cite{teichman_2018}. These can include
-hundreds or even thousands of layers of convolutions. Typical CNNs for
-classification include two types of layers: convolutional layers and
-pooling layers. Pooling layers introduce non-linearity to the model to
-make is feasible to include several layers of convolutions.
-Convolutional layers, on the other hand, are responsible for creating
-the image representation. The last layer(s) in CNNs are usually fully
-connected layers. The output of the network are the probabilities of
-each class being in the image.~\cite{cs231n}
+tasks, such as image retrieval~\cite{teichmann_2018}. These can
+include hundreds or even thousands of layers of convolutions. Typical
+CNNs for classification include two types of layers: convolutional
+layers and pooling layers. Pooling layers introduce non-linearity to
+the model to make is feasible to include several layers of
+convolutions. Convolutional layers, on the other hand, are responsible
+for creating the image representation. The last layer(s) in CNNs are
+in most cases fully connected layers. The output of the network are
+the probabilities of each class being in the image.~\cite{cs231n}
 
 CNNs for classification are trained with cross-entropy loss~\cite[Ch.
   6]{goodfellow_2016}. The idea of the loss is to punish weights that
 are responsible for wrong classification, and reward weights that are
 responsible for correct classification during training. Additionally,
-batch normalization~\cite{ioffe_2015} is used to generalaize the
+batch normalization~\cite{ioffe_2015} is used to generalize the
 results. Furthermore, classification with CNNs includes many more
 bells and whistles that create the absolute best results.
 
@@ -118,12 +118,12 @@ data and 20 \% test data in a stratified manner. This means that both
 splits contain equal proportions of positive and negative examples.
 
 % 3.
-The CNN archtecture used in this study is similar to the one proposed
+The CNN architecture used in this study is similar to the one proposed
 in the laboratory instructions, and it is implemented with the
 Keras~\cite{keras} framework. In addition to the layers proposed by
 the instructor, a batch normalization layer is added in front of every
 convolutional layer. A $3 \times 3$ convolutional kernel is used in
-every convolutional layer. Normally distributed glorot
+every convolutional layer. Normally distributed Glorot
 initializer~\cite{glorot10a} is used to initialize the kernel weights,
 and each layer contains $L2$-regularization~\cite[Ch.
   7]{goodfellow_2016}. The activation function for the fully connected
@@ -132,12 +132,11 @@ is trained using the Adam optimizer~\cite{adam_optimizer}.
 
 % 4.
 Finally, an additional sanity check and demonstrator is constructed by
-reading a web camera feed in real time. Each frame is sent to the
+reading a web camera feed in real-time. Each frame is sent to the
 model synchronously, and the output of the model is displayed in the
 grafical user interface in a human-readable form. This functionality
 is implemented with the OpenCV computer vision library~\cite{opencv}.
-The project was implemented with the Python~\cite{rossum_1995}
-programming language.
+The project was implemented in Python~\cite{rossum_1995}.
 
 \begin{table}[t]
   \begin{minipage}[t]{0.5\textwidth}\centering
@@ -182,10 +181,10 @@ programming language.
 \section{Results and Discussion}\label{sec:results}
 
 The solution described in Section~\ref{sec:solution} was achieved
-through iterative optimizion. First, the default parameters were used,
-which gave a somewhat reasonable result. Batch normalization was then
-added, because from our previous experience with neural networks we
-knew it would help. It did improve the results a little bit. The
+through iterative optimization. First, the default parameters were
+used, which gave a somewhat reasonable result. Batch normalization was
+then added, because from our previous experience with neural networks
+we knew it would help. It did improve the results by roughly 5 \%. The
 largest difference in this case, however, was achieved by carefully
 selecting the loss function. Cross-entropy loss was noted to be the
 superior loss for this case. Finally, when $L2$-regularization and one
@@ -198,15 +197,16 @@ fixed so that the results are both replicatable and comparable. The
 batch size was 64 in both cases, and learning rate was set to 0.001.
 
 Table~\ref{tab:default-confusion} shows the confusion matrix for the
-optimized default arhcitecture with batch normalization. The learning
+optimized default architecture with batch normalization. The learning
 curve for the same process is shown in Figure~\ref{fig:default}.
 Respectively, Table~\ref{tab:best-confusion} and Figure~\ref{fig:best}
 illustrate the same measurements for the final model. As can be seen
-from the confusion matrices, both model are quite good at
-classification, however, the final model is clearly better. The one
-extra layer adds more expression power to the model so that it can
-learn a more complicated representation for the task. On the other
-hand, the $L2$-regularization prevents the model from overfitting.
+from the confusion matrices, both models are quite good at
+classification, however, the final model results in sginificantly
+better accuracy. The one extra layer adds more expression power to the
+model so that it can learn a more complicated representation for the
+task. On the other hand, the $L2$-regularization prevents the model
+from overfitting.
 
 \begin{figure*}[t]
   \begin{minipage}[t]{0.5\textwidth}\centering
@@ -241,11 +241,11 @@ image. This makes it difficult even for humans to classify the images.
 A true negative and a true positive are shown in
 Figure~\ref{fig:tptn}.
 
-The real-time part of the program works quite well as well, provided
-that the person is close enough to the camera. This could be improved
-in the future by adding a face detector, which would draw a bounding
-box around the face, after which the input image could be cropped.
-Also, the lighting plays a part in the working of the real-time
+The real-time part of the program works quite well in situations where
+the person is close enough to the camera. This could be improved in
+the future by adding a face detector, which would draw a bounding box
+around the face, after which the input image could be cropped. Also,
+the lighting plays a part in the working of the real-time
 functionality. Again, a true negative and a true positive are shown in
 Figure~\ref{fig:realtime}. It is important to set the webcam aspect
 ratio to one since all training data was square shaped. It is also
